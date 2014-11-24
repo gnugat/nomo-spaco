@@ -1,6 +1,6 @@
 <?php
 
-use Gnugat\NomoSpaco\FcqnRepository;
+use test\Gnugat\NomoSpaco\Container;
 
 require __DIR__.'/../vendor/autoload.php';
 
@@ -9,5 +9,6 @@ if (2 !== $argc) {
     die("Usage: 'php $script <projectRoot>'\n");
 }
 $projectRoot = $argv[1];
-$fcqnRepository = new FcqnRepository();
+$container = new Container();
+$fcqnRepository = $container->get();
 var_dump($fcqnRepository->findAll($projectRoot));

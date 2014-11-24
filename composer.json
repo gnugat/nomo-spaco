@@ -9,6 +9,11 @@
             "Gnugat\\NomoSpaco\\": "src/Gnugat/NomoSpaco"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "test\\Gnugat\\NomoSpaco\\": "test"
+        }
+    },
     "authors": [
         {
             "name": "Loïc Chardonnet",
@@ -18,6 +23,10 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.3",
+        "symfony/finder": "~2.3"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "~2.0"
     }
 }
