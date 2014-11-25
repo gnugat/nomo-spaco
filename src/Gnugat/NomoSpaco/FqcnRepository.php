@@ -2,8 +2,7 @@
 
 namespace Gnugat\NomoSpaco;
 
-use Gnugat\NomoSpaco\Composer\AutoloadRepository;
-use Gnugat\NomoSpaco\Composer\FileRepository;
+use Gnugat\NomoSpaco\File\FileRepository;
 use Exception;
 use ReflectionClass;
 
@@ -15,25 +14,15 @@ use ReflectionClass;
 class FqcnRepository
 {
     /**
-     * @var AutoloadRepository
-     */
-    private $autoloadRepository;
-
-    /**
      * @var FileRepository
      */
     private $fileRepository;
 
     /**
-     * @param AutoloadRepository $autoloadRepository
-     * @param FileRepository     $fileRepository
+     * @param FileRepository $fileRepository
      */
-    public function __construct(
-        AutoloadRepository $autoloadRepository,
-        FileRepository $fileRepository
-    )
+    public function __construct(FileRepository $fileRepository)
     {
-        $this->autoloadRepository = $autoloadRepository;
         $this->fileRepository = $fileRepository;
     }
 
@@ -46,8 +35,7 @@ class FqcnRepository
      */
     public function findAll($projectRoot)
     {
-        $paths = $this->autoloadRepository->findAll($projectRoot);
-        $files = $this->fileRepository->findPhp($paths);
+        $files = $this->fileRepository->findPhp($projectRoot);
         $fqcns = array();
         foreach ($files as $file) {
             $fqcns[] = $file->getNamespace().'\\'.$file->getClassname();
@@ -66,8 +54,7 @@ class FqcnRepository
      */
     public function findOne($projectRoot, $classname)
     {
-        $paths = $this->autoloadRepository->findAll($projectRoot);
-        $files = $this->fileRepository->findPhp($paths);
+        $files = $this->fileRepository->findPhp($projectRoot);
         $fqcns = array();
         foreach ($files as $file) {
             if ($classname !== $file->getClassname()) {

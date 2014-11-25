@@ -1,13 +1,13 @@
 <?php
 
-namespace spec\Gnugat\NomoSpaco\Composer;
+namespace spec\Gnugat\NomoSpaco\File;
 
 use PhpSpec\ObjectBehavior;
 
 class FileSpec extends ObjectBehavior
 {
     const FILE_NAME = '/Fixtures/MyClass.php';
-    const NAME_SPACE = 'spec\\Gnugat\\NomoSpaco\\Composer\\Fixtures';
+    const NAME_SPACE = 'spec\\Gnugat\\NomoSpaco\\File\\Fixtures';
     const CLASS_NAME = 'MyClass';
 
     function let()

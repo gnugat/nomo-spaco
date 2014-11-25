@@ -1,6 +1,6 @@
 <?php
 
-namespace Gnugat\NomoSpaco\Composer;
+namespace Gnugat\NomoSpaco\File;
 
 class File
 {
