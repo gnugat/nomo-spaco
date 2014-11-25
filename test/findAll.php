@@ -10,5 +10,5 @@ if (2 !== $argc) {
 }
 $projectRoot = $argv[1];
 $container = new Container();
-$fcqnRepository = $container->get();
-var_dump($fcqnRepository->findAll($projectRoot));
+$fqcnRepository = $container->get();
+var_dump($fqcnRepository->findAll($projectRoot));

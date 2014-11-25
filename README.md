@@ -5,7 +5,7 @@ Proof of Concept that use Composer and PSR-4 to:
 * list the available fully qualified classnames of a project
 * list the possible fully qualified classnames of a classname
 
-> **Note**: a Fully Qualified ClassName (fcqn) is a classname with its complete
+> **Note**: a Fully Qualified ClassName (fqcn) is a classname with its complete
 > namespace.
 
 ## Features
@@ -28,10 +28,10 @@ Enter Nomo Spaco:
 
 require __DIR__.'/vendor/autoload.php';
 
-use Gnugat\NomoSpaco\FcqnRepository;
+use Gnugat\NomoSpaco\FqcnRepository;
 
-$fcqnRepository = new FcqnRepository();
-$allFcqns = $fcqnRepository->findAll(__DIR__);
+$fqcnRepository = new FqcnRepository();
+$allFqcns = $fqcnRepository->findAll(__DIR__);
 ```
 
 ### Find One
@@ -48,10 +48,10 @@ Spaco:
 
 require __DIR__.'/vendor/autoload.php';
 
-use Gnugat\NomoSpaco\FcqnRepository;
+use Gnugat\NomoSpaco\FqcnRepository;
 
-$fcqnRepository = new FcqnRepository();
-$possibleFcqns = $fcqnRepository->findOne(__DIR__, 'Classname');
+$fqcnRepository = new FqcnRepository();
+$possibleFqcns = $fqcnRepository->findOne(__DIR__, 'Classname');
 ```
 
 ## How does this work?

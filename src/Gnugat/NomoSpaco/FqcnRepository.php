@@ -12,7 +12,7 @@ use ReflectionClass;
  *
  * @api
  */
-class FcqnRepository
+class FqcnRepository
 {
     /**
      * @var AutoloadRepository
@@ -48,12 +48,12 @@ class FcqnRepository
     {
         $paths = $this->autoloadRepository->findAll($projectRoot);
         $files = $this->fileRepository->findPhp($paths);
-        $fcqns = array();
+        $fqcns = array();
         foreach ($files as $file) {
-            $fcqns[] = $file->getNamespace().'\\'.$file->getClassname();
+            $fqcns[] = $file->getNamespace().'\\'.$file->getClassname();
         }
 
-        return $fcqns;
+        return $fqcns;
     }
 
     /**
@@ -68,14 +68,14 @@ class FcqnRepository
     {
         $paths = $this->autoloadRepository->findAll($projectRoot);
         $files = $this->fileRepository->findPhp($paths);
-        $fcqns = array();
+        $fqcns = array();
         foreach ($files as $file) {
             if ($classname !== $file->getClassname()) {
                 continue;
             }
-            $fcqns[] = $file->getNamespace().'\\'.$classname;
+            $fqcns[] = $file->getNamespace().'\\'.$classname;
         }
 
-        return $fcqns;
+        return $fqcns;
     }
 }

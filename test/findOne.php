@@ -11,5 +11,5 @@ if (3 !== $argc) {
 $projectRoot = $argv[1];
 $classname = $argv[2];
 $container = new Container();
-$fcqnRepository = $container->get();
-var_dump($fcqnRepository->findOne($projectRoot, $classname));
+$fqcnRepository = $container->get();
+var_dump($fqcnRepository->findOne($projectRoot, $classname));
