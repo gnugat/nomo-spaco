@@ -33,7 +33,7 @@ class FqcnRepository
      *
      * @api
      */
-    public function findAll($projectRoot)
+    public function findIn($projectRoot)
     {
         $files = $this->fileRepository->findPhp($projectRoot);
         $fqcns = array();
@@ -52,7 +52,7 @@ class FqcnRepository
      *
      * @api
      */
-    public function findOne($projectRoot, $classname)
+    public function findInFor($projectRoot, $classname)
     {
         $files = $this->fileRepository->findPhp($projectRoot);
         $fqcns = array();

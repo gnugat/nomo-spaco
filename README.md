@@ -1,57 +1,53 @@
 # Nomo Spaco
 
-Proof of Concept that use Composer and PSR-4 to:
+Finds the available Fully Qualified ClassNames (fqcn) in a project.
 
-* list the available fully qualified classnames of a project
-* list the possible fully qualified classnames of a classname
+> **Caution**: this is a prototype, the work is still in progress.
 
 > **Note**: a Fully Qualified ClassName (fqcn) is a classname with its complete
 > namespace.
 
+## Installation
+
+Use [Composer](https://getcomposer.org) to install this library in your projects:
+
+    composer require "gnugat/nomo-spaco"
+
 ## Features
 
-### Find All
+### Find in path
 
 In order to find all the available fully qualified classnames of a PHP project,
-you can use a combination of the following native functions:
-
-* get_declared_classes
-* get_declared_interfaces
-
-However, it only works for **loaded** classes, so if you're using an autoloader
-you'll miss a lot of classes.
-
-Enter Nomo Spaco:
+you need to provide the path to its root:
 
 ```php
 <?php
 
 require __DIR__.'/vendor/autoload.php';
 
-use Gnugat\NomoSpaco\FqcnRepository;
-
-$fqcnRepository = new FqcnRepository();
-$allFqcns = $fqcnRepository->findAll(__DIR__);
+$fqcnRepository = \test\Gnugat\NomoSpaco\make_fqcn_repository();
+$allFqcns = $fqcnRepository->findIn(__DIR__);
 ```
 
-### Find One
+> **Caution**: the `make_fqcn_repository` function is only available for
+> demonstration purpose. Please use a proper Dependency Injection Container.
 
-In order to find a class's fully qualified classnames you can use
-`ClassReflection`, or since 5.5 the `::class` keyword.
+> **Note**: the core function `get_declared_classes()` isn't able to return classes
+> which haven't been included (the usage of autoloaders breaks it).
+> Nomo Spaco tries to address this issue.
 
-However, what if you want to list the possible fully qualified classnames (in
-case a classname is used in two or more different namespaces), you can use Nomo
-Spaco:
+### Find in path for classname
+
+In order to find all the possible fully qualified classnames for a given class,
+you need to provide the path to the project's root and the classname:
 
 ```php
 <?php
 
 require __DIR__.'/vendor/autoload.php';
 
-use Gnugat\NomoSpaco\FqcnRepository;
-
-$fqcnRepository = new FqcnRepository();
-$possibleFqcns = $fqcnRepository->findOne(__DIR__, 'Classname');
+$fqcnRepository = \test\Gnugat\NomoSpaco\make_fqcn_repository();
+$possibleFqcns = $fqcnRepository->findInFor(__DIR__, 'Classname');
 ```
 
 ## How does this work?
