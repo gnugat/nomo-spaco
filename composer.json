@@ -12,7 +12,8 @@
     "autoload-dev": {
         "psr-4": {
             "test\\Gnugat\\NomoSpaco\\": "test"
-        }
+        },
+        "files": ["test/make_fqcn_repository.php"]
     },
     "authors": [
         {

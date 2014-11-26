@@ -2,8 +2,8 @@
 
 namespace Gnugat\NomoSpaco;
 
-use Gnugat\NomoSpaco\Composer\AutoloadRepository;
-use Gnugat\NomoSpaco\Composer\FileRepository;
+use Gnugat\NomoSpaco\File\FileRepository;
+use Gnugat\NomoSpaco\Fqcn\FqcnFactory;
 use Exception;
 use ReflectionClass;
 
@@ -15,26 +15,19 @@ use ReflectionClass;
 class FqcnRepository
 {
     /**
-     * @var AutoloadRepository
-     */
-    private $autoloadRepository;
-
-    /**
      * @var FileRepository
      */
     private $fileRepository;
 
     /**
-     * @param AutoloadRepository $autoloadRepository
-     * @param FileRepository     $fileRepository
+     * @param FileRepository $fileRepository
+     *
+     * @api
      */
-    public function __construct(
-        AutoloadRepository $autoloadRepository,
-        FileRepository $fileRepository
-    )
+    public function __construct(FileRepository $fileRepository, FqcnFactory $fqcnFactory)
     {
-        $this->autoloadRepository = $autoloadRepository;
         $this->fileRepository = $fileRepository;
+        $this->fqcnFactory = $fqcnFactory;
     }
 
     /**
@@ -44,14 +37,14 @@ class FqcnRepository
      *
      * @api
      */
-    public function findAll($projectRoot)
+    public function findIn($projectRoot)
     {
-        $paths = $this->autoloadRepository->findAll($projectRoot);
-        $files = $this->fileRepository->findPhp($paths);
-        $fqcns = array();
-        foreach ($files as $file) {
-            $fqcns[] = $file->getNamespace().'\\'.$file->getClassname();
-        }
+        $files = $this->fileRepository->findPhp($projectRoot);
+        $projectFqcns = $this->fqcnFactory->makeFromFiles($files);
+        $loadedFqcns = $this->fqcnFactory->makeFromLoaded();
+        $duplicatedFqcns = array_merge($projectFqcns, $loadedFqcns);
+        $unindexedFqcns = array_unique($duplicatedFqcns);
+        $fqcns = array_values($unindexedFqcns);
 
         return $fqcns;
     }
@@ -64,17 +57,14 @@ class FqcnRepository
      *
      * @api
      */
-    public function findOne($projectRoot, $classname)
+    public function findInFor($projectRoot, $classname)
     {
-        $paths = $this->autoloadRepository->findAll($projectRoot);
-        $files = $this->fileRepository->findPhp($paths);
-        $fqcns = array();
-        foreach ($files as $file) {
-            if ($classname !== $file->getClassname()) {
-                continue;
-            }
-            $fqcns[] = $file->getNamespace().'\\'.$classname;
-        }
+        $files = $this->fileRepository->findPhp($projectRoot);
+        $projectFqcns = $this->fqcnFactory->makeFromFilesFor($files, $classname);
+        $loadedFqcns = $this->fqcnFactory->makeFromLoadedFor($classname);
+        $duplicatedFqcns = array_merge($projectFqcns, $loadedFqcns);
+        $unindexedFqcns = array_unique($duplicatedFqcns);
+        $fqcns = array_values($unindexedFqcns);
 
         return $fqcns;
     }
