@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.0: no loaded
+
+* removed dependency on get_declared_classes
+
 ## 0.2.0: no composer
 
 > **Caution**: Bacward Compatibility breaks.
