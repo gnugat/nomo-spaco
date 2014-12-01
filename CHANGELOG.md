@@ -6,7 +6,7 @@
 
 ## 0.2.0: no composer
 
-> **Caution**: Bacward Compatibility breaks.
+> **Caution**: Backward Compatibility breaks.
 
 * renamed findOne to findInFor from FqcnRepository (BC break)
 * renamed findAll to findIn from FqcnRepository (BC break)
