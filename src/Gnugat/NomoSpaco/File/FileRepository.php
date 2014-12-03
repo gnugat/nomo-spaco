@@ -2,7 +2,9 @@
 
 namespace Gnugat\NomoSpaco\File;
 
-use Symfony\Component\Finder\Finder;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
+use RegexIterator;
 
 class FileRepository
 {
@@ -13,14 +15,11 @@ class FileRepository
      */
     public function findPhp($path)
     {
-        $finderFiles = Finder::create()
-            ->files()
-            ->in($path)
-            ->name('*.php')
-        ;
+        $allFiles = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
+        $phpFiles = new RegexIterator($allFiles, '/\.php$/');
         $files = array();
-        foreach ($finderFiles as $finderFile) {
-            $files[] = new File($finderFile->getRealpath());
+        foreach ($phpFiles as $phpFile) {
+            $files[] = new File($phpFile->getRealpath());
         }
 
         return $files;
