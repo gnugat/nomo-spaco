@@ -3,8 +3,6 @@
 namespace Gnugat\NomoSpaco;
 
 use Gnugat\NomoSpaco\File\FileRepository;
-use Exception;
-use ReflectionClass;
 
 /**
  * Retrieves a list of fully qualified classnames.
