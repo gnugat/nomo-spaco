@@ -26,6 +26,8 @@ class FqcnRepository
     /**
      * @param FileRepository $fileRepository
      * @param ParserFactory  $parserFactory
+     *
+     * @deprecated 0.4 ParserFactory becomes mandatory
      */
     public function __construct(FileRepository $fileRepository, ParserFactory $parserFactory = null)
     {

@@ -1,5 +1,14 @@
 # Changes
 
+## 0.4.0: PHP tokens and iterators
+
+* added new constructor argument to FqcnRepository
+* added dependency on token_get_all
+* added dependency on RegexIterator
+* added dependency on RecursiveIteratorIterator
+* added dependency on RecursiveDirectoryIterator
+* removed dependency on symfony2 Finder
+
 ## 0.3.0: no loaded
 
 * removed dependency on get_declared_classes
