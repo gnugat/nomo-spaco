@@ -10,41 +10,32 @@ class File
     private $filename;
 
     /**
-     * @var array
+     * @var string
      */
-    private $lines = array();
+    private $content;
 
     /**
      * @param string $filename
      */
-    public function __construct($filename)
+    public function __construct($filename, $content)
     {
         $this->filename = $filename;
-        $this->lines = file($filename);
+        $this->content = $content;
     }
 
     /**
      * @return string
      */
-    public function getNamespace()
+    public function getFilename()
     {
-        $linesFound = preg_grep('/^namespace /', $this->lines);
-        $line = array_shift($linesFound);
-        $match = array();
-        preg_match('/^namespace (.*);/', $line, $match);
-
-        return array_pop($match);
+        return $this->filename;
     }
 
     /**
      * @return string
      */
-    public function getClassname()
+    public function getContent()
     {
-        $parts = explode('/', $this->filename);
-        $filename = array_pop($parts);
-        $parts = explode('.', $filename);
-
-        return array_shift($parts);
+        return $this->content;
     }
 }

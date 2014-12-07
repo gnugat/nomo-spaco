@@ -19,7 +19,9 @@ class FileRepository
         $phpFiles = new RegexIterator($allFiles, '/\.php$/');
         $files = array();
         foreach ($phpFiles as $phpFile) {
-            $files[] = new File($phpFile->getRealpath());
+            $filename = $phpFile->getRealpath();
+            $content = file_get_contents($filename);
+            $files[] = new File($filename, $content);
         }
 
         return $files;

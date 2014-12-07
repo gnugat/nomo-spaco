@@ -3,6 +3,8 @@
 namespace Gnugat\NomoSpaco;
 
 use Gnugat\NomoSpaco\File\FileRepository;
+use Gnugat\NomoSpaco\Token\FqcnCollection;
+use Gnugat\NomoSpaco\Token\ParserFactory;
 
 /**
  * Retrieves a list of fully qualified classnames.
@@ -16,12 +18,19 @@ class FqcnRepository
      */
     private $fileRepository;
 
+        /**
+     * @var ParserFactory
+     */
+    private $parserFactory;
+
     /**
      * @param FileRepository $fileRepository
+     * @param ParserFactory  $parserFactory
      */
-    public function __construct(FileRepository $fileRepository)
+    public function __construct(FileRepository $fileRepository, ParserFactory $parserFactory = null)
     {
         $this->fileRepository = $fileRepository;
+        $this->parserFactory = $parserFactory ?: new ParserFactory();
     }
 
     /**
@@ -34,12 +43,14 @@ class FqcnRepository
     public function findIn($projectRoot)
     {
         $files = $this->fileRepository->findPhp($projectRoot);
-        $fqcns = array();
+        $fqcnCollection = new FqcnCollection();
+        $allParser = $this->parserFactory->makeAll($fqcnCollection);
         foreach ($files as $file) {
-            $fqcns[] = $file->getNamespace().'\\'.$file->getClassname();
+            $content = $file->getContent();
+            $allParser->parse($content);
         }
 
-        return $fqcns;
+        return $fqcnCollection->all();
     }
 
     /**
@@ -53,14 +64,13 @@ class FqcnRepository
     public function findInFor($projectRoot, $classname)
     {
         $files = $this->fileRepository->findPhp($projectRoot);
-        $fqcns = array();
+        $fqcnCollection = new FqcnCollection();
+        $forParser = $this->parserFactory->makeFor($fqcnCollection, $classname);
         foreach ($files as $file) {
-            if ($classname !== $file->getClassname()) {
-                continue;
-            }
-            $fqcns[] = $file->getNamespace().'\\'.$classname;
+            $content = $file->getContent();
+            $forParser->parse($content);
         }
 
-        return $fqcns;
+        return $fqcnCollection->all();
     }
 }

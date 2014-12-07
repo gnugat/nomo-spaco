@@ -1,23 +1,23 @@
 # Nomo Spaco
 
-Finds the available Fully Qualified ClassNames (fqcn) in a project.
+Finds available Fully Qualified ClassNames (fqcn) in a project.
 
 > **Caution**: this is a prototype, the work is still in progress.
 
 > **Note**: a Fully Qualified ClassName (fqcn) is a classname with its complete
-> namespace.
+> namespace (e.g. `Symfony\Component\HttpFoundation\Request`).
 
 ## Installation
 
 Use [Composer](https://getcomposer.org) to install this library in your projects:
 
-    composer require "gnugat/nomo-spaco"
+    composer require "gnugat/nomo-spaco:~0.4"
 
 ## Features
 
 ### Find in path
 
-In order to find all the available fully qualified classnames of a PHP project,
+In order to find all available fully qualified classnames of a PHP project,
 you need to provide the path to its root:
 
 ```php
@@ -32,13 +32,9 @@ $allFqcns = $fqcnRepository->findIn(__DIR__);
 > **Caution**: the `make_fqcn_repository` function is only available for
 > demonstration purpose. Please use a proper Dependency Injection Container.
 
-> **Note**: the core function `get_declared_classes()` isn't able to return classes
-> which haven't been included (the usage of autoloaders breaks it).
-> Nomo Spaco tries to address this issue.
-
 ### Find in path for classname
 
-In order to find all the possible fully qualified classnames for a given class,
+In order to find all possible fully qualified classnames for a given class,
 you need to provide the path to the project's root and the classname:
 
 ```php
@@ -53,17 +49,14 @@ $possibleFqcns = $fqcnRepository->findInFor(__DIR__, 'Classname');
 ## How does this work?
 
 Nowdays PHP projects are powered by [Composer](https://getcomposer.org), a
-package manager that installs an autoloads them.
+package manager that installs an autoloads them. This breaks native functions
+like [get_declared_classes](http://php.net/get_declared_classes).
 
-It can rely on PSR-0 and PSR-4 which ask developers to:
+**Nomo Spaco** tries to fix this issue in an old fashion way:
 
-1. define only one class per file
-2. name the file after the classname
-3. place the file in directories that follows the namespace
-
-By using Composer's class mapping, we are able to locate every class in the
-project. From the filename and the namespace delcared inside each PHP files, we
-can populate a collection of fully qualified classnames.
+* find all PHP files in a project
+* for each file, find the namespace using PHP tokens
+* for each file, find class names using PHP tokens
 
 ## Demonstration
 
