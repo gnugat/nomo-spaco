@@ -1,5 +1,9 @@
 # Changes
 
+## 0.4.1: PHP 7
+
+* now compatible with PHP 7
+
 ## 0.4.0: PHP tokens and iterators
 
 * added new constructor argument to FqcnRepository
