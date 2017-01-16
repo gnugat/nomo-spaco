@@ -1,5 +1,9 @@
 # Changes
 
+## 0.4.2: Magic Constant
+
+* handled `::class` magic constant case
+
 ## 0.4.1: PHP 7
 
 * now compatible with PHP 7
