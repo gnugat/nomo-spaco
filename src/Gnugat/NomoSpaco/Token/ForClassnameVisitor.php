@@ -43,6 +43,6 @@ class ForClassnameVisitor implements Visitor
      */
     public function supports(array $tokens, $index)
     {
-        return (isset($tokens[$index][0]) && T_CLASS === $tokens[$index][0]);
+        return (isset($tokens[$index][0]) && T_CLASS === $tokens[$index][0] && T_DOUBLE_COLON !== $tokens[$index - 1][0]);
     }
 }
