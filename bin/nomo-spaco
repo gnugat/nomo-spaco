@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php
+
+$autoloadPath = '/../vendor/autoload.php';
+require_once file_exists(__DIR__.$autoloadPath) ? __DIR__.$autoloadPath : __DIR__.'/../../..'.$autoloadPath;
+
+$script = $argv[0];
+if (2 !== $argc) {
+    die("Usage: 'php $script <projectRoot>'\n");
+}
+$projectRoot = $argv[1];
+$fqcnRepository = \test\Gnugat\NomoSpaco\make_fqcn_repository();
+echo implode(PHP_EOL, $fqcnRepository->findIn($projectRoot));

@@ -15,6 +15,9 @@
         },
         "files": ["test/make_fqcn_repository.php"]
     },
+    "bin": [
+        "bin/nomo-spaco"
+    ],
     "authors": [
         {
             "name": "Loïc Chardonnet",
